@@ -81,15 +81,12 @@ function defineRooms(element) {
 
 var authorData = {
   'author': {
-    'avatar': 'img/avatars/user' + '0' + '.png'
+    'avatar': 'img/avatars/user0' + '.png'
   },
   'userAvatarNum': [1, 2, 3, 4, 5, 6, 7, 8]
 };
 
 var offerData = {
-  'author': {
-    'avatar': 'img/avatars/user' + '0' + '.png'
-  },
   'offer': {
     'title': ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'],
     'address': '' + getRandom(1, ADDRESS_RANDOM) + ',' + ' ' +getRandom(1, ADDRESS_RANDOM),
@@ -102,10 +99,6 @@ var offerData = {
     'features': ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'],
     'description': ' ',
     'photos': ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg']
-  },
-  'location': {
-    'x': getRandom(0, mapPinsSize),
-    'y': getRandom(POSITION_Y1_RANDOM, POSITION_Y2_RANDOM)
   }
 };
 
