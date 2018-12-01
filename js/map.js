@@ -120,7 +120,7 @@ function generateAd(i) {
   advertise.location.y = getRandom(POSITION_Y1_RANDOM, POSITION_Y2_RANDOM)
 
   advertise.offer.title = offerData.offer.title[i],
-  advertise.offer.address = '' + advertise.location.x + ',' + ' ' + advertise.location.y,
+  advertise.offer.address = advertise.location.x + ', ' + advertise.location.y,
   advertise.offer.price = getRandom(MIN_PRICE_RANDOM, MAX_PRICE_RANDOM),
   advertise.offer.type = offerData.offer.type[getRandom(0, offerData.offer.type.length)],
   advertise.offer.rooms = getRandom(1, ROOMS_RANDOM),
@@ -147,23 +147,22 @@ function generateAds() {
 };
 
 var ads = generateAds();
-console.log(ads);
 
-function renderPin(offers) {
+function renderPin(ad) {
   var pinElement = mapPinTemplate.cloneNode(true);
   var pinImg = pinElement.querySelector('img');
 
-  pinElement.setAttribute('style', 'left: ' + (offers.location.x - pinWidth / 2) + 'px; top: ' + (offers.location.y - pinHeight) + 'px;');
-  pinImg.setAttribute('src', offers.author.avatar);
-  pinElement.setAttribute('alt', offers.offer.title);
+  pinElement.setAttribute('style', 'left: ' + (ad.location.x - pinWidth / 2) + 'px; top: ' + (ad.location.y - pinHeight) + 'px;');
+  pinImg.setAttribute('src', ad.author.avatar);
+  pinElement.setAttribute('alt', ad.offer.title);
 
   return pinElement;
 };
 
 var fragment = document.createDocumentFragment();
 
-ads.forEach(function (i) {
-  fragment.appendChild(renderPin(i));
+ads.forEach(function (ad) {
+  fragment.appendChild(renderPin(ad));
 });
 
 mapPins.appendChild(fragment);
@@ -195,7 +194,6 @@ function createCard(card) {
   card.offer.features.forEach(function (i) {
     var newCardFeature = document.createElement('li');
     newCardFeature.classList.add('popup__feature', 'popup__feature--' + i);
-    console.log(i);
     fragment.appendChild(newCardFeature.cloneNode(true));
   });
   cardFeatures.appendChild(fragment);
