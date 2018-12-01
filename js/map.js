@@ -29,7 +29,7 @@ var cardTemplate = document.querySelector('#card')
 
 function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
-};
+}
 
 function shuffle(array) {
   for (var i = array.length - 1; i > 0; i--) {
@@ -39,13 +39,13 @@ function shuffle(array) {
     array[j] = temp;
   }
   return array;
-};
+}
 
 function removeChildren(elem) {
   while (elem.lastChild) {
     elem.innerHTML = null;
   }
-};
+}
 
 function defineApartmentsType(element) {
   var apartmentsType;
@@ -59,7 +59,7 @@ function defineApartmentsType(element) {
     apartmentsType = 'Дворец';
   }
   return apartmentsType;
-};
+}
 
 function defineGuests(element) {
   var guests = ' гостей';
@@ -67,7 +67,7 @@ function defineGuests(element) {
     guests = ' гостя';
   }
   return guests;
-};
+}
 
 function defineRooms(element) {
   var rooms = ' комнаты для ';
@@ -77,7 +77,7 @@ function defineRooms(element) {
     rooms = ' комнат для ';
   }
   return rooms;
-};
+}
 
 var authorData = {
   'author': {
@@ -89,7 +89,7 @@ var authorData = {
 var offerData = {
   'offer': {
     'title': ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'],
-    'address': '' + getRandom(1, ADDRESS_RANDOM) + ',' + ' ' +getRandom(1, ADDRESS_RANDOM),
+    'address': '' + getRandom(1, ADDRESS_RANDOM) + ',' + ' ' + getRandom(1, ADDRESS_RANDOM),
     'price': getRandom(MIN_PRICE_RANDOM, MAX_PRICE_RANDOM),
     'type': ['palace', 'flat', 'house', 'bungalo'],
     'rooms': getRandom(1, ROOMS_RANDOM),
@@ -102,49 +102,40 @@ var offerData = {
   }
 };
 
-var locationData = {
-  'x': getRandom(0, mapPinsSize),
-  'y': getRandom(POSITION_Y1_RANDOM, POSITION_Y2_RANDOM)
-};
-
-
 function generateAd(i) {
   var advertise = {};
   advertise.author = {};
   advertise.offer = {};
   advertise.location = {};
-
-  advertise.author.avatar = 'img/avatars/user0' + authorData.userAvatarNum[i] + '.png'
-
-  advertise.location.x = getRandom(0, mapPinsSize),
-  advertise.location.y = getRandom(POSITION_Y1_RANDOM, POSITION_Y2_RANDOM)
-
-  advertise.offer.title = offerData.offer.title[i],
-  advertise.offer.address = advertise.location.x + ', ' + advertise.location.y,
-  advertise.offer.price = getRandom(MIN_PRICE_RANDOM, MAX_PRICE_RANDOM),
-  advertise.offer.type = offerData.offer.type[getRandom(0, offerData.offer.type.length)],
-  advertise.offer.rooms = getRandom(1, ROOMS_RANDOM),
-  advertise.offer.guests = getRandom(1, ROOMS_RANDOM * 2),
-  advertise.offer.checkin = offerData.offer.checkin[getRandom(0, offerData.offer.checkin.length)],
-  advertise.offer.checkout = offerData.offer.checkout[getRandom(0, offerData.offer.checkout.length)],
-  advertise.offer.features = offerData.offer.features,
-  advertise.offer.description = ' ',
-  advertise.offer.photos = offerData.offer.photos
+  advertise.author.avatar = 'img/avatars/user0' + authorData.userAvatarNum[i] + '.png';
+  advertise.location.x = getRandom(0, mapPinsSize);
+  advertise.location.y = getRandom(POSITION_Y1_RANDOM, POSITION_Y2_RANDOM);
+  advertise.offer.title = offerData.offer.title[i];
+  advertise.offer.address = advertise.location.x + ', ' + advertise.location.y;
+  advertise.offer.price = getRandom(MIN_PRICE_RANDOM, MAX_PRICE_RANDOM);
+  advertise.offer.type = offerData.offer.type[getRandom(0, offerData.offer.type.length)];
+  advertise.offer.rooms = getRandom(1, ROOMS_RANDOM);
+  advertise.offer.guests = getRandom(1, ROOMS_RANDOM * 2);
+  advertise.offer.checkin = offerData.offer.checkin[getRandom(0, offerData.offer.checkin.length)];
+  advertise.offer.checkout = offerData.offer.checkout[getRandom(0, offerData.offer.checkout.length)];
+  advertise.offer.features = offerData.offer.features;
+  advertise.offer.description = ' ';
+  advertise.offer.photos = offerData.offer.photos;
 
   return advertise;
-};
+}
 
 function generateAds() {
-    var advertises = [];
-    for (var i = 0; i < AD_QUANTITY; i++) {
-      advertises[i] = generateAd(i);
+  var advertises = [];
+  for (var i = 0; i < AD_QUANTITY; i++) {
+    advertises[i] = generateAd(i);
 
-      advertises[i].offer.photos = shuffle(advertises[i].offer.photos);
+    advertises[i].offer.photos = shuffle(advertises[i].offer.photos);
 
-      advertises[i].offer.features = shuffle(advertises[i].offer.features).slice(0, getRandom(1, advertises[i].offer.features.length));
-    }
-    return advertises;
-};
+    advertises[i].offer.features = shuffle(advertises[i].offer.features).slice(0, getRandom(1, advertises[i].offer.features.length));
+  }
+  return advertises;
+}
 
 var ads = generateAds();
 
@@ -157,7 +148,7 @@ function renderPin(ad) {
   pinElement.setAttribute('alt', ad.offer.title);
 
   return pinElement;
-};
+}
 
 var fragment = document.createDocumentFragment();
 
@@ -186,9 +177,9 @@ function createCard(card) {
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout;
 
   var cardFeatures = cardElement.querySelector('.popup__features');
-  var cardFeature = cardElement.querySelector('.popup__feature');
+  // var cardFeature = cardElement.querySelector('.popup__feature');
 
-  var fragment = document.createDocumentFragment();
+  // var fragment = document.createDocumentFragment();
   removeChildren(cardFeatures);
 
   card.offer.features.forEach(function (i) {
@@ -203,7 +194,7 @@ function createCard(card) {
   var cardPhoto = cardPhotos.querySelector('.popup__photo');
   cardPhoto.setAttribute('src', card.offer.photos[0]);
 
-  var fragment = document.createDocumentFragment();
+  // var fragment = document.createDocumentFragment();
   removeChildren(cardPhotos);
 
   card.offer.photos.forEach(function (i) {
@@ -221,6 +212,6 @@ function createCard(card) {
   cardElement.querySelector('.popup__avatar').setAttribute('src', card.author.avatar);
 
   return cardElement;
-};
+}
 
 map.insertBefore(createCard(ads[0]), mapFilters);
