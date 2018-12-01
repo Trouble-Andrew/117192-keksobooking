@@ -21,7 +21,7 @@ var pin = document.querySelector('.map__pin');
 var pinWidth = pin.offsetWidth;
 var pinHeight = pin.offsetHeight;
 
-var mapFilters = document.querySelector('.map__filters-container');
+// var mapFilters = document.querySelector('.map__filters-container');
 
 var cardTemplate = document.querySelector('#card')
   .content
@@ -214,4 +214,4 @@ function createCard(card) {
   return cardElement;
 }
 
-map.insertBefore(createCard(ads[0]), mapFilters);
+map.appendChild(createCard(ads[0]));
