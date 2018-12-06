@@ -2,7 +2,7 @@
 
 var AD_QUANTITY = 8;
 var ESC_KEYCODE = 27;
-var ENTER_KEYCODE = 13;
+// var ENTER_KEYCODE = 13;
 var ROOMS_RANDOM = 5;
 var MIN_PRICE_RANDOM = 1000;
 var MAX_PRICE_RANDOM = 1000001;
@@ -184,9 +184,7 @@ function createCard(card) {
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout;
 
   var cardFeatures = cardElement.querySelector('.popup__features');
-  // var cardFeature = cardElement.querySelector('.popup__feature');
 
-  // var fragment = document.createDocumentFragment();
   removeChildren(cardFeatures);
 
   card.offer.features.forEach(function (i) {
@@ -218,6 +216,9 @@ function createCard(card) {
 
   cardElement.querySelector('.popup__avatar').setAttribute('src', card.author.avatar);
 
+  var cardClose = cardElement.querySelector('.popup__close');
+  cardClose.tabIndex = '0';
+
   return cardElement;
 }
 
@@ -229,8 +230,8 @@ var fieldsetAdForm = adForm.querySelectorAll('fieldset');
 var addressInput = adForm.querySelector('#address');
 
 function toggleFieldsetDisabled(fieldset, disabled) {
-  fieldsetAdForm.forEach(function (field) {
-    field.disabled = disabled;
+  fieldsetAdForm.forEach(function (fieldset) {
+    fieldset.disabled = disabled;
   });
 }
 
@@ -253,8 +254,8 @@ function activateMap() {
   addressInput.disabled = true;
   var pins = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
 
-  pins.forEach(function (pin, index) {
-    pinPopupOpen(pin, ads[index]);
+  pins.forEach(function (pinEach, index) {
+    pinPopupOpen(pinEach, ads[index]);
   });
 
   PIN_MAIN.removeEventListener('mouseup', activateMap);
@@ -264,10 +265,10 @@ PIN_MAIN.addEventListener('mouseup', activateMap);
 
 
 function pinPopupOpen(pinOnMap, advertise) {
-  var advertiseOne;
   pinOnMap.addEventListener('click', function pinClickHandler() {
     var advertiseAll = document.querySelectorAll('.map__card');
     for (var i = 0; i < advertiseAll.length; i++) {
+      var advertiseOne;
       advertiseAll[i].remove();
     }
     advertiseOne = map.appendChild(createCard(advertise));
@@ -277,19 +278,20 @@ function pinPopupOpen(pinOnMap, advertise) {
 
 function adCloseClickHandler(advertise) {
   var cardClose = advertise.querySelector('.popup__close');
-  cardClose.tabIndex = '0';
   document.addEventListener('keydown', popupEscHandler);
-  cardClose.addEventListener('click', function () {
-    advertise.remove();
-  });
+  cardClose.addEventListener('click', removeCard);
 }
 
 function popupEscHandler(evt) {
-  var card = document.querySelector('.map__card');
   if (evt.keyCode === ESC_KEYCODE) {
-    card.remove();
-    document.removeEventListener('keydown', popupEscHandler);
+    removeCard();
   }
+}
+
+function removeCard() {
+  var card = document.querySelector('.map__card');
+  card.remove();
+  document.removeEventListener('keydown', popupEscHandler);
 }
 
 //
