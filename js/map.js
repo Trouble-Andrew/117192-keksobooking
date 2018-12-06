@@ -1,6 +1,8 @@
 'use strict';
 
 var AD_QUANTITY = 8;
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
 var ROOMS_RANDOM = 5;
 var MIN_PRICE_RANDOM = 1000;
 var MAX_PRICE_RANDOM = 1000001;
@@ -8,8 +10,14 @@ var ADDRESS_RANDOM = 601;
 var POSITION_Y1_RANDOM = 130;
 var POSITION_Y2_RANDOM = 631;
 
+var PIN_MAIN = document.querySelector('.map__pin--main');
+var PIN_MAIN_END_HEIGHT = window.getComputedStyle(document.querySelector('.map__pin--main'), ':after').getPropertyValue('height');
+
+var PIN_MAIN_WIDTH = PIN_MAIN.offsetWidth;
+var PIN_MAIN_HEIGHT = PIN_MAIN.offsetHeight;
+
 var map = document.querySelector('.map');
-map.classList.remove('map--faded');
+// map.classList.remove('map--faded');
 
 var mapPinTemplate = document.querySelector('#pin')
   .content
@@ -17,7 +25,7 @@ var mapPinTemplate = document.querySelector('#pin')
 var mapPins = document.querySelector('.map__pins');
 var mapPinsSize = mapPins.offsetWidth;
 
-var pin = document.querySelector('.map__pin');
+var pin = mapPins.querySelector('.map__pin');
 var pinWidth = pin.offsetWidth;
 var pinHeight = pin.offsetHeight;
 
@@ -156,8 +164,7 @@ ads.forEach(function (ad) {
   fragment.appendChild(renderPin(ad));
 });
 
-mapPins.appendChild(fragment);
-
+// mapPins.appendChild(fragment);
 
 function createCard(card) {
   var cardElement = cardTemplate.cloneNode(true);
@@ -214,4 +221,98 @@ function createCard(card) {
   return cardElement;
 }
 
-map.appendChild(createCard(ads[0]));
+// map.appendChild(createCard(ads[0]));
+
+
+var adForm = document.querySelector('.ad-form');
+var selectAdForm = adForm.querySelectorAll('select');
+var inputAdForm = adForm.querySelectorAll('input');
+var addressInput = adForm.querySelector('#address');
+
+function toggleSelectInputDisabled(select, input, attribute) {
+  for (var i = 0; i < select.length; i++) {
+    select[i].disabled = attribute;
+  }
+  for (var j = 0; j < input.length; j++) {
+    input[j].disabled = attribute;
+  }
+}
+
+toggleSelectInputDisabled(selectAdForm, inputAdForm, true);
+
+function calculatePinPosition() {
+  var pinMainPosition = {};
+  pinMainPosition.left = parseInt(PIN_MAIN.style.left, 10) + Math.round(PIN_MAIN_WIDTH / 2);
+  pinMainPosition.top = parseInt(PIN_MAIN.style.top, 10) + PIN_MAIN_HEIGHT + parseInt(PIN_MAIN_END_HEIGHT, 10);
+  return pinMainPosition;
+}
+
+function activateMap() {
+  map.classList.remove('map--faded');
+  toggleSelectInputDisabled(selectAdForm, inputAdForm, false);
+  mapPins.appendChild(fragment);
+  adForm.classList.remove('ad-form--disabled');
+  var pinMainPosition = calculatePinPosition();
+  addressInput.value = pinMainPosition.left + ', ' + pinMainPosition.top;
+  addressInput.disabled = true;
+  var pins = mapPins.querySelectorAll('.map__pin');
+
+  for (var i = 1; i < pins.length; i++) {
+    pinClickHandler(pins[i], ads[i - 1]);
+  }
+}
+
+PIN_MAIN.addEventListener('mouseup', function () {
+  activateMap();
+});
+
+
+function pinClickHandler(pin, advertise) {
+  var advertiseOne;
+
+  pin.addEventListener('click', function () {
+    var advertiseAll = document.querySelectorAll('.map__card');
+    for (var i = 0; i < advertiseAll.length; i++) {
+      advertiseAll[i].remove();
+    }
+    if (advertiseOne) {
+      advertiseOne.remove();
+    }
+    advertiseOne = map.appendChild(createCard(advertise));
+    adCloseClickHandler(advertiseOne);
+    addImgTabindex();
+  });
+}
+
+function adCloseClickHandler(advertise) {
+  var cardClose = advertise.querySelector('.popup__close');
+  cardClose.tabIndex = '0';
+  document.addEventListener('keydown', popupEscHandler);
+  cardClose.addEventListener('click', function (evt) {
+    advertise.remove();
+    if (evt.keyCode === 13) {
+      advertise.remove();
+    }
+  });
+}
+
+function popupEscHandler(evt) {
+  var card = document.querySelector('.map__card');
+  if (evt.keyCode === ESC_KEYCODE) {
+    card.remove();
+  }
+}
+
+function addImgTabindex() {
+  var allPhotos = document.querySelectorAll('.popup__photo');
+  for (var i = 0; i < allPhotos.length; i++) {
+    allPhotos[i].tabIndex = i + 1;
+  }
+}
+//
+// cardClose.addEventListener('keydown', function (evt) {
+//   var card = document.querySelector('.map__card');
+//   if (evt.keyCode === 13) {
+//     card.remove();
+//   }
+// });
