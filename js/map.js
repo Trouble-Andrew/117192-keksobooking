@@ -225,20 +225,15 @@ function createCard(card) {
 
 
 var adForm = document.querySelector('.ad-form');
-var selectAdForm = adForm.querySelectorAll('select');
-var inputAdForm = adForm.querySelectorAll('input');
+var fieldsetAdForm = adForm.querySelectorAll('fieldset');
 var addressInput = adForm.querySelector('#address');
-
-function toggleSelectInputDisabled(select, input, attribute) {
-  for (var i = 0; i < select.length; i++) {
-    select[i].disabled = attribute;
-  }
-  for (var j = 0; j < input.length; j++) {
-    input[j].disabled = attribute;
+function toggleFieldsetDisabled(fieldset, attribute) {
+  for (var i = 0; i < fieldsetAdForm.length; i++) {
+    fieldsetAdForm[i].disabled = attribute;
   }
 }
 
-toggleSelectInputDisabled(selectAdForm, inputAdForm, true);
+toggleFieldsetDisabled(fieldsetAdForm, true);
 
 function calculatePinPosition() {
   var pinMainPosition = {};
@@ -249,7 +244,7 @@ function calculatePinPosition() {
 
 function activateMap() {
   map.classList.remove('map--faded');
-  toggleSelectInputDisabled(selectAdForm, inputAdForm, false);
+  toggleFieldsetDisabled(fieldsetAdForm, false);
   mapPins.appendChild(fragment);
   adForm.classList.remove('ad-form--disabled');
   var pinMainPosition = calculatePinPosition();
@@ -267,10 +262,10 @@ PIN_MAIN.addEventListener('mouseup', function () {
 });
 
 
-function pinClickHandler(pin, advertise) {
+function pinClickHandler(pinOnMap, advertise) {
   var advertiseOne;
 
-  pin.addEventListener('click', function () {
+  pinOnMap.addEventListener('click', function () {
     var advertiseAll = document.querySelectorAll('.map__card');
     for (var i = 0; i < advertiseAll.length; i++) {
       advertiseAll[i].remove();
@@ -290,7 +285,7 @@ function adCloseClickHandler(advertise) {
   document.addEventListener('keydown', popupEscHandler);
   cardClose.addEventListener('click', function (evt) {
     advertise.remove();
-    if (evt.keyCode === 13) {
+    if (evt.keyCode === ENTER_KEYCODE) {
       advertise.remove();
     }
   });
@@ -298,7 +293,7 @@ function adCloseClickHandler(advertise) {
 
 function popupEscHandler(evt) {
   var card = document.querySelector('.map__card');
-  if (evt.keyCode === ESC_KEYCODE) {
+  if (card && evt.keyCode === ESC_KEYCODE) {
     card.remove();
   }
 }
