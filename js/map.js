@@ -1,6 +1,8 @@
 'use strict';
 
 var AD_QUANTITY = 8;
+var ESC_KEYCODE = 27;
+// var ENTER_KEYCODE = 13;
 var ROOMS_RANDOM = 5;
 var MIN_PRICE_RANDOM = 1000;
 var MAX_PRICE_RANDOM = 1000001;
@@ -8,8 +10,14 @@ var ADDRESS_RANDOM = 601;
 var POSITION_Y1_RANDOM = 130;
 var POSITION_Y2_RANDOM = 631;
 
+var PIN_MAIN = document.querySelector('.map__pin--main');
+var PIN_MAIN_END_HEIGHT = window.getComputedStyle(document.querySelector('.map__pin--main'), ':after').getPropertyValue('height');
+
+var PIN_MAIN_WIDTH = PIN_MAIN.offsetWidth;
+var PIN_MAIN_HEIGHT = PIN_MAIN.offsetHeight;
+
 var map = document.querySelector('.map');
-map.classList.remove('map--faded');
+// map.classList.remove('map--faded');
 
 var mapPinTemplate = document.querySelector('#pin')
   .content
@@ -17,7 +25,7 @@ var mapPinTemplate = document.querySelector('#pin')
 var mapPins = document.querySelector('.map__pins');
 var mapPinsSize = mapPins.offsetWidth;
 
-var pin = document.querySelector('.map__pin');
+var pin = mapPins.querySelector('.map__pin');
 var pinWidth = pin.offsetWidth;
 var pinHeight = pin.offsetHeight;
 
@@ -156,8 +164,7 @@ ads.forEach(function (ad) {
   fragment.appendChild(renderPin(ad));
 });
 
-mapPins.appendChild(fragment);
-
+// mapPins.appendChild(fragment);
 
 function createCard(card) {
   var cardElement = cardTemplate.cloneNode(true);
@@ -177,9 +184,7 @@ function createCard(card) {
   cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + card.offer.checkin + ', выезд до ' + card.offer.checkout;
 
   var cardFeatures = cardElement.querySelector('.popup__features');
-  // var cardFeature = cardElement.querySelector('.popup__feature');
 
-  // var fragment = document.createDocumentFragment();
   removeChildren(cardFeatures);
 
   card.offer.features.forEach(function (i) {
@@ -211,7 +216,88 @@ function createCard(card) {
 
   cardElement.querySelector('.popup__avatar').setAttribute('src', card.author.avatar);
 
+  var cardClose = cardElement.querySelector('.popup__close');
+  cardClose.tabIndex = '0';
+
   return cardElement;
 }
 
-map.appendChild(createCard(ads[0]));
+// map.appendChild(createCard(ads[0]));
+
+
+var adForm = document.querySelector('.ad-form');
+var fieldsetAdForm = adForm.querySelectorAll('fieldset');
+var addressInput = adForm.querySelector('#address');
+
+function toggleFieldsetDisabled(fieldset, disabled) {
+  fieldsetAdForm.forEach(function (fieldset) {
+    fieldset.disabled = disabled;
+  });
+}
+
+toggleFieldsetDisabled(fieldsetAdForm, true);
+
+function calculatePinPosition() {
+  var pinMainPosition = {};
+  pinMainPosition.left = parseInt(PIN_MAIN.style.left, 10) + Math.round(PIN_MAIN_WIDTH / 2);
+  pinMainPosition.top = parseInt(PIN_MAIN.style.top, 10) + PIN_MAIN_HEIGHT + parseInt(PIN_MAIN_END_HEIGHT, 10);
+  return pinMainPosition;
+}
+
+function activateMap() {
+  map.classList.remove('map--faded');
+  toggleFieldsetDisabled(fieldsetAdForm, false);
+  mapPins.appendChild(fragment);
+  adForm.classList.remove('ad-form--disabled');
+  var pinMainPosition = calculatePinPosition();
+  addressInput.value = pinMainPosition.left + ', ' + pinMainPosition.top;
+  addressInput.disabled = true;
+  var pins = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
+
+  pins.forEach(function (pinEach, index) {
+    pinPopupOpen(pinEach, ads[index]);
+  });
+
+  PIN_MAIN.removeEventListener('mouseup', activateMap);
+}
+
+PIN_MAIN.addEventListener('mouseup', activateMap);
+
+
+function pinPopupOpen(pinOnMap, advertise) {
+  pinOnMap.addEventListener('click', function pinClickHandler() {
+    var advertiseAll = document.querySelectorAll('.map__card');
+    for (var i = 0; i < advertiseAll.length; i++) {
+      var advertiseOne;
+      advertiseAll[i].remove();
+    }
+    advertiseOne = map.appendChild(createCard(advertise));
+    adCloseClickHandler(advertiseOne);
+  });
+}
+
+function adCloseClickHandler(advertise) {
+  var cardClose = advertise.querySelector('.popup__close');
+  document.addEventListener('keydown', popupEscHandler);
+  cardClose.addEventListener('click', removeCard);
+}
+
+function popupEscHandler(evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    removeCard();
+  }
+}
+
+function removeCard() {
+  var card = document.querySelector('.map__card');
+  card.remove();
+  document.removeEventListener('keydown', popupEscHandler);
+}
+
+//
+// cardClose.addEventListener('keydown', function (evt) {
+//   var card = document.querySelector('.map__card');
+//   if (evt.keyCode === 13) {
+//     card.remove();
+//   }
+// });
