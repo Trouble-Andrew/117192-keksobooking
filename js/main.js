@@ -76,7 +76,9 @@ function defineGuestsQuantity() {
         guestsOptions[1].disabled = false;
         guestsOptions[2].disabled = false;
         guestsOptions[3].disabled = true;
-        if (guestsOptions[2].selected) {
+        if (guestsOptions[3].selected) {
+          guestsOptions[1].selected = true;
+        } else if (guestsOptions[0].selected) {
           guestsOptions[1].selected = true;
         }
         // guestsOptions[1].selected = true;
