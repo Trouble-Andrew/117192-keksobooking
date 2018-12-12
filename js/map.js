@@ -251,7 +251,7 @@ function activateMap() {
   adForm.classList.remove('ad-form--disabled');
   var pinMainPosition = calculatePinPosition();
   addressInput.value = pinMainPosition.left + ', ' + pinMainPosition.top;
-  addressInput.disabled = true;
+  addressInput.readonly = true;
   var pins = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
 
   pins.forEach(function (pinEach, index) {
