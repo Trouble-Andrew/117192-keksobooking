@@ -16,6 +16,11 @@ var PIN_MAIN_END_HEIGHT = window.getComputedStyle(document.querySelector('.map__
 var PIN_MAIN_WIDTH = PIN_MAIN.offsetWidth;
 var PIN_MAIN_HEIGHT = PIN_MAIN.offsetHeight;
 
+var overlay = document.querySelector('.map__overlay');
+var MAP_Y_MIN = 130;
+var MAP_Y_MAX = 630;
+var PADDING = 30;
+
 var map = document.querySelector('.map');
 // map.classList.remove('map--faded');
 
@@ -260,7 +265,7 @@ function activateMap() {
   PIN_MAIN.removeEventListener('mouseup', activateMap);
 }
 
-PIN_MAIN.addEventListener('mouseup', activateMap);
+// PIN_MAIN.addEventListener('mouseup', activateMap);
 
 
 function pinPopupOpen(pinOnMap, advertise) {
@@ -293,10 +298,55 @@ function removeCard() {
   document.removeEventListener('keydown', popupEscHandler);
 }
 
-//
-// cardClose.addEventListener('keydown', function (evt) {
-//   var card = document.querySelector('.map__card');
-//   if (evt.keyCode === 13) {
-//     card.remove();
-//   }
-// });
+
+(function () {
+  PIN_MAIN.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+
+
+      PIN_MAIN.style.top = (PIN_MAIN.offsetTop - shift.y) + 'px';
+      if (PIN_MAIN.offsetTop <= MAP_Y_MIN - PIN_MAIN_HEIGHT) {
+        PIN_MAIN.style.top = MAP_Y_MIN - PIN_MAIN_HEIGHT + 'px';
+      } else if (PIN_MAIN.offsetTop >= MAP_Y_MAX) {
+        PIN_MAIN.style.top = MAP_Y_MAX + 'px';
+      }
+      PIN_MAIN.style.left = (PIN_MAIN.offsetLeft - shift.x) + 'px';
+      if (PIN_MAIN.offsetLeft <= 0 - PIN_MAIN_WIDTH / 2) {
+        PIN_MAIN.style.left = 0 - PIN_MAIN_WIDTH / 2 + 'px';
+      } else if (PIN_MAIN.offsetLeft >= overlay.offsetWidth - PADDING) {
+        PIN_MAIN.style.left = (overlay.offsetWidth - PADDING) + 'px';
+      }
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+
+      activateMap();
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
+})();
