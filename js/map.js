@@ -235,8 +235,8 @@ var fieldsetAdForm = adForm.querySelectorAll('fieldset');
 var addressInput = adForm.querySelector('#address');
 
 function toggleFieldsetDisabled(fieldset, disabled) {
-  fieldsetAdForm.forEach(function (fieldset) {
-    fieldset.disabled = disabled;
+  fieldsetAdForm.forEach(function (field) {
+    field.disabled = disabled;
   });
 }
 
@@ -265,7 +265,7 @@ function activateMap() {
   PIN_MAIN.removeEventListener('mouseup', activateMap);
 }
 
-// PIN_MAIN.addEventListener('mouseup', activateMap);
+PIN_MAIN.addEventListener('mouseup', activateMap);
 
 
 function pinPopupOpen(pinOnMap, advertise) {
@@ -321,8 +321,6 @@ function removeCard() {
         y: moveEvt.clientY
       };
 
-
-
       PIN_MAIN.style.top = (PIN_MAIN.offsetTop - shift.y) + 'px';
       if (PIN_MAIN.offsetTop <= MAP_Y_MIN - PIN_MAIN_HEIGHT) {
         PIN_MAIN.style.top = MAP_Y_MIN - PIN_MAIN_HEIGHT + 'px';
@@ -335,6 +333,9 @@ function removeCard() {
       } else if (PIN_MAIN.offsetLeft >= overlay.offsetWidth - PADDING) {
         PIN_MAIN.style.left = (overlay.offsetWidth - PADDING) + 'px';
       }
+
+      var pinMainPosition = calculatePinPosition();
+      addressInput.value = pinMainPosition.left + ', ' + pinMainPosition.top;
     };
 
     var onMouseUp = function (upEvt) {
@@ -343,7 +344,7 @@ function removeCard() {
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
 
-      activateMap();
+      // activateMap();
     };
 
     document.addEventListener('mousemove', onMouseMove);
