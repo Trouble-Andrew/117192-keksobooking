@@ -22,7 +22,6 @@ var MAP_Y_MAX = 630;
 var PADDING = 30;
 
 var map = document.querySelector('.map');
-// map.classList.remove('map--faded');
 
 var mapPinTemplate = document.querySelector('#pin')
   .content
@@ -33,8 +32,6 @@ var mapPinsSize = mapPins.offsetWidth;
 var pin = mapPins.querySelector('.map__pin');
 var pinWidth = pin.offsetWidth;
 var pinHeight = pin.offsetHeight;
-
-// var mapFilters = document.querySelector('.map__filters-container');
 
 var cardTemplate = document.querySelector('#card')
   .content
@@ -169,8 +166,6 @@ ads.forEach(function (ad) {
   fragment.appendChild(renderPin(ad));
 });
 
-// mapPins.appendChild(fragment);
-
 function createCard(card) {
   var cardElement = cardTemplate.cloneNode(true);
 
@@ -204,7 +199,6 @@ function createCard(card) {
   var cardPhoto = cardPhotos.querySelector('.popup__photo');
   cardPhoto.setAttribute('src', card.offer.photos[0]);
 
-  // var fragment = document.createDocumentFragment();
   removeChildren(cardPhotos);
 
   card.offer.photos.forEach(function (i) {
@@ -227,9 +221,6 @@ function createCard(card) {
   return cardElement;
 }
 
-// map.appendChild(createCard(ads[0]));
-
-
 var adForm = document.querySelector('.ad-form');
 var fieldsetAdForm = adForm.querySelectorAll('fieldset');
 var addressInput = adForm.querySelector('#address');
@@ -246,6 +237,7 @@ function calculatePinPosition() {
   var pinMainPosition = {};
   pinMainPosition.left = parseInt(PIN_MAIN.style.left, 10) + Math.round(PIN_MAIN_WIDTH / 2);
   pinMainPosition.top = parseInt(PIN_MAIN.style.top, 10) + PIN_MAIN_HEIGHT + parseInt(PIN_MAIN_END_HEIGHT, 10);
+  addressInput.value = pinMainPosition.left + ', ' + pinMainPosition.top;
   return pinMainPosition;
 }
 
@@ -254,8 +246,6 @@ function activateMap() {
   toggleFieldsetDisabled(fieldsetAdForm, false);
   mapPins.appendChild(fragment);
   adForm.classList.remove('ad-form--disabled');
-  var pinMainPosition = calculatePinPosition();
-  addressInput.value = pinMainPosition.left + ', ' + pinMainPosition.top;
   var pins = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
 
   pins.forEach(function (pinEach, index) {
@@ -334,8 +324,7 @@ function removeCard() {
         PIN_MAIN.style.left = (overlay.offsetWidth - PADDING) + 'px';
       }
 
-      var pinMainPosition = calculatePinPosition();
-      addressInput.value = pinMainPosition.left + ', ' + pinMainPosition.top;
+      calculatePinPosition();
     };
 
     var onMouseUp = function (upEvt) {
@@ -344,7 +333,6 @@ function removeCard() {
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
 
-      // activateMap();
     };
 
     document.addEventListener('mousemove', onMouseMove);
