@@ -15,9 +15,9 @@ var roomSelect = document.querySelector('#room_number');
 var roomsOptions = roomSelect.querySelectorAll('option');
 
 var timeInSelect = document.querySelector('#timein');
-var timeInOptions = timeInSelect.querySelectorAll('option');
+// var timeInOptions = timeInSelect.querySelectorAll('option');
 var timeOutSelect = document.querySelector('#timeout');
-var timeOutOptions = timeOutSelect.querySelectorAll('option');
+// var timeOutOptions = timeOutSelect.querySelectorAll('option');
 
 function defineAppartmentPrice(evt) {
   apartmentsTypeOptions.forEach(function () {

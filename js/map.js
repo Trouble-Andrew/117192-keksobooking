@@ -16,8 +16,12 @@ var PIN_MAIN_END_HEIGHT = window.getComputedStyle(document.querySelector('.map__
 var PIN_MAIN_WIDTH = PIN_MAIN.offsetWidth;
 var PIN_MAIN_HEIGHT = PIN_MAIN.offsetHeight;
 
+var overlay = document.querySelector('.map__overlay');
+var MAP_Y_MIN = 130;
+var MAP_Y_MAX = 630;
+var PADDING = 30;
+
 var map = document.querySelector('.map');
-// map.classList.remove('map--faded');
 
 var mapPinTemplate = document.querySelector('#pin')
   .content
@@ -28,8 +32,6 @@ var mapPinsSize = mapPins.offsetWidth;
 var pin = mapPins.querySelector('.map__pin');
 var pinWidth = pin.offsetWidth;
 var pinHeight = pin.offsetHeight;
-
-// var mapFilters = document.querySelector('.map__filters-container');
 
 var cardTemplate = document.querySelector('#card')
   .content
@@ -164,8 +166,6 @@ ads.forEach(function (ad) {
   fragment.appendChild(renderPin(ad));
 });
 
-// mapPins.appendChild(fragment);
-
 function createCard(card) {
   var cardElement = cardTemplate.cloneNode(true);
 
@@ -199,7 +199,6 @@ function createCard(card) {
   var cardPhoto = cardPhotos.querySelector('.popup__photo');
   cardPhoto.setAttribute('src', card.offer.photos[0]);
 
-  // var fragment = document.createDocumentFragment();
   removeChildren(cardPhotos);
 
   card.offer.photos.forEach(function (i) {
@@ -222,16 +221,13 @@ function createCard(card) {
   return cardElement;
 }
 
-// map.appendChild(createCard(ads[0]));
-
-
 var adForm = document.querySelector('.ad-form');
 var fieldsetAdForm = adForm.querySelectorAll('fieldset');
 var addressInput = adForm.querySelector('#address');
 
 function toggleFieldsetDisabled(fieldset, disabled) {
-  fieldsetAdForm.forEach(function (fieldset) {
-    fieldset.disabled = disabled;
+  fieldsetAdForm.forEach(function (field) {
+    field.disabled = disabled;
   });
 }
 
@@ -241,6 +237,7 @@ function calculatePinPosition() {
   var pinMainPosition = {};
   pinMainPosition.left = parseInt(PIN_MAIN.style.left, 10) + Math.round(PIN_MAIN_WIDTH / 2);
   pinMainPosition.top = parseInt(PIN_MAIN.style.top, 10) + PIN_MAIN_HEIGHT + parseInt(PIN_MAIN_END_HEIGHT, 10);
+  addressInput.value = pinMainPosition.left + ', ' + pinMainPosition.top;
   return pinMainPosition;
 }
 
@@ -249,8 +246,6 @@ function activateMap() {
   toggleFieldsetDisabled(fieldsetAdForm, false);
   mapPins.appendChild(fragment);
   adForm.classList.remove('ad-form--disabled');
-  var pinMainPosition = calculatePinPosition();
-  addressInput.value = pinMainPosition.left + ', ' + pinMainPosition.top;
   var pins = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
 
   pins.forEach(function (pinEach, index) {
@@ -293,10 +288,54 @@ function removeCard() {
   document.removeEventListener('keydown', popupEscHandler);
 }
 
-//
-// cardClose.addEventListener('keydown', function (evt) {
-//   var card = document.querySelector('.map__card');
-//   if (evt.keyCode === 13) {
-//     card.remove();
-//   }
-// });
+
+(function () {
+  PIN_MAIN.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      PIN_MAIN.style.top = (PIN_MAIN.offsetTop - shift.y) + 'px';
+      if (PIN_MAIN.offsetTop <= MAP_Y_MIN - PIN_MAIN_HEIGHT) {
+        PIN_MAIN.style.top = MAP_Y_MIN - PIN_MAIN_HEIGHT + 'px';
+      } else if (PIN_MAIN.offsetTop >= MAP_Y_MAX) {
+        PIN_MAIN.style.top = MAP_Y_MAX + 'px';
+      }
+      PIN_MAIN.style.left = (PIN_MAIN.offsetLeft - shift.x) + 'px';
+      if (PIN_MAIN.offsetLeft <= 0 - PIN_MAIN_WIDTH / 2) {
+        PIN_MAIN.style.left = 0 - PIN_MAIN_WIDTH / 2 + 'px';
+      } else if (PIN_MAIN.offsetLeft >= overlay.offsetWidth - PADDING) {
+        PIN_MAIN.style.left = (overlay.offsetWidth - PADDING) + 'px';
+      }
+
+      calculatePinPosition();
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
+})();
