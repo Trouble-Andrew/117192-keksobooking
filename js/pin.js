@@ -1,11 +1,6 @@
 'use strict';
 
 (function () {
-  // var PIN_MAIN = document.querySelector('.map__pin--main');
-  // var PIN_MAIN_END_HEIGHT = window.getComputedStyle(document.querySelector('.map__pin--main'), ':after').getPropertyValue('height');
-  // var PIN_MAIN_WIDTH = PIN_MAIN.offsetWidth;
-  // var PIN_MAIN_HEIGHT = PIN_MAIN.offsetHeight;
-
   var mapPinTemplate = document.querySelector('#pin')
     .content
     .querySelector('.map__pin');
