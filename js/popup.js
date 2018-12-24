@@ -6,11 +6,12 @@
   function pinPopupOpen(pinOnMap, advertise) {
     pinOnMap.addEventListener('click', function pinClickHandler() {
       var advertiseAll = document.querySelectorAll('.map__card');
-      for (var i = 0; i < advertiseAll.length; i++) {
-        var advertiseOne;
-        advertiseAll[i].remove();
-      }
-      advertiseOne = map.appendChild(window.card.createCard(advertise));
+
+      advertiseAll.forEach(function (ad) {
+        ad.remove();
+      });
+
+      var advertiseOne = map.appendChild(window.card.card(advertise));
       adCloseClickHandler(advertiseOne);
     });
   }
@@ -18,7 +19,7 @@
   function adCloseClickHandler(advertise) {
     var cardClose = advertise.querySelector('.popup__close');
     document.addEventListener('keydown', popupEscHandler);
-    cardClose.addEventListener('click', removeCard);
+    cardClose.addEventListener('click', removeClickHandler);
   }
 
   function popupEscHandler(evt) {
@@ -31,8 +32,12 @@
     document.removeEventListener('keydown', popupEscHandler);
   }
 
+  var removeClickHandler = function () {
+    removeCard();
+  };
+
   window.popup = {
-    pinPopupOpen: pinPopupOpen
+    open: pinPopupOpen
   };
 
 })();

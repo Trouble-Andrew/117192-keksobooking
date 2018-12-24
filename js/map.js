@@ -8,7 +8,7 @@
   var fragment = document.createDocumentFragment();
 
   ads.forEach(function (ad) {
-    fragment.appendChild(window.pin.renderPin(ad));
+    fragment.appendChild(window.pin.render(ad));
   });
 
   var adForm = document.querySelector('.ad-form');
@@ -30,12 +30,16 @@
     var pins = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
 
     pins.forEach(function (pinEach, index) {
-      window.popup.pinPopupOpen(pinEach, ads[index]);
+      window.popup.open(pinEach, ads[index]);
     });
 
-    PIN_MAIN.removeEventListener('mouseup', activateMap);
+    PIN_MAIN.removeEventListener('mouseup', activateMouseUpHandler);
   }
 
-  PIN_MAIN.addEventListener('mouseup', activateMap);
+  function activateMouseUpHandler() {
+    activateMap();
+  }
+
+  PIN_MAIN.addEventListener('mouseup', activateMouseUpHandler);
 
 })();

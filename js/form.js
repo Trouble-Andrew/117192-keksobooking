@@ -7,7 +7,6 @@ var PALACE_MIN_PRICE = 10000;
 
 var appartmentPrice = document.querySelector('#price');
 var appartmentTypeSelect = document.querySelector('#type');
-var apartmentsTypeOptions = appartmentTypeSelect.querySelectorAll('option');
 
 var guestsSelect = document.querySelector('#capacity');
 var guestsOptions = guestsSelect.querySelectorAll('option');
@@ -15,34 +14,30 @@ var roomSelect = document.querySelector('#room_number');
 var roomsOptions = roomSelect.querySelectorAll('option');
 
 var timeInSelect = document.querySelector('#timein');
-// var timeInOptions = timeInSelect.querySelectorAll('option');
 var timeOutSelect = document.querySelector('#timeout');
-// var timeOutOptions = timeOutSelect.querySelectorAll('option');
 
-function defineAppartmentPrice(evt) {
-  apartmentsTypeOptions.forEach(function () {
-    switch (evt.target.value) {
-      case 'bungalo':
-        appartmentPrice.minlength = BUNGALO_MIN_PRICE;
-        appartmentPrice.placeholder = BUNGALO_MIN_PRICE;
-        break;
-      case 'flat':
-        appartmentPrice.minlength = FLAT_MIN_PRICE;
-        appartmentPrice.placeholder = FLAT_MIN_PRICE;
-        break;
-      case 'house':
-        appartmentPrice.minlength = HOUSE_MIN_PRICE;
-        appartmentPrice.placeholder = HOUSE_MIN_PRICE;
-        break;
-      case 'palace':
-        appartmentPrice.minlength = PALACE_MIN_PRICE;
-        appartmentPrice.placeholder = PALACE_MIN_PRICE;
-        break;
-    }
-  });
+function apartmentChangeHandler(evt) {
+  switch (evt.target.value) {
+    case 'bungalo':
+      appartmentPrice.minlength = BUNGALO_MIN_PRICE;
+      appartmentPrice.placeholder = BUNGALO_MIN_PRICE;
+      break;
+    case 'flat':
+      appartmentPrice.minlength = FLAT_MIN_PRICE;
+      appartmentPrice.placeholder = FLAT_MIN_PRICE;
+      break;
+    case 'house':
+      appartmentPrice.minlength = HOUSE_MIN_PRICE;
+      appartmentPrice.placeholder = HOUSE_MIN_PRICE;
+      break;
+    case 'palace':
+      appartmentPrice.minlength = PALACE_MIN_PRICE;
+      appartmentPrice.placeholder = PALACE_MIN_PRICE;
+      break;
+  }
 }
 
-appartmentTypeSelect.addEventListener('change', defineAppartmentPrice, false);
+appartmentTypeSelect.addEventListener('change', apartmentChangeHandler, false);
 
 function startGuests() {
   guestsOptions[0].disabled = true;
@@ -53,7 +48,7 @@ function startGuests() {
 
 startGuests();
 
-function defineGuestsQuantity() {
+function roomsChangeHandler() {
   roomsOptions.forEach(function (options) {
     if (options.selected === true) {
       if (options.value === '1') {
@@ -91,12 +86,16 @@ function defineGuestsQuantity() {
   });
 }
 
-roomSelect.addEventListener('change', defineGuestsQuantity, false);
+roomSelect.addEventListener('change', roomsChangeHandler, false);
 
 function changeTime(evt) {
   timeInSelect.value = evt.target.value;
   timeOutSelect.value = evt.target.value;
 }
 
-timeInSelect.addEventListener('change', changeTime, false);
-timeOutSelect.addEventListener('change', changeTime, false);
+function timeChangeHandler(evt) {
+  changeTime(evt);
+}
+
+timeInSelect.addEventListener('change', timeChangeHandler, false);
+timeOutSelect.addEventListener('change', timeChangeHandler, false);
