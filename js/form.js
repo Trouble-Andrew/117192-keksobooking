@@ -48,42 +48,43 @@ function startGuests() {
 
 startGuests();
 
-function roomsChangeHandler() {
-  roomsOptions.forEach(function (options) {
-    if (options.selected === true) {
-      if (options.value === '1') {
-        guestsOptions[0].disabled = true;
-        guestsOptions[1].disabled = true;
-        guestsOptions[2].disabled = false;
-        guestsOptions[3].disabled = true;
-        guestsOptions[2].selected = true;
-      } else if (options.value === '2') {
-        guestsOptions[0].disabled = true;
-        guestsOptions[1].disabled = false;
-        guestsOptions[2].disabled = false;
-        guestsOptions[3].disabled = true;
-        if (guestsOptions[0].selected === true) {
-          guestsOptions[1].selected = true;
-        } else if (guestsOptions[3].selected === true) {
-          guestsOptions[1].selected = true;
-        }
-      } else if (options.value === '3') {
-        guestsOptions[0].disabled = false;
-        guestsOptions[1].disabled = false;
-        guestsOptions[2].disabled = false;
-        guestsOptions[3].disabled = true;
-        if (guestsOptions[3].selected === true) {
-          guestsOptions[0].selected = true;
-        }
-      } else if (options.value === '100') {
-        guestsOptions[0].disabled = true;
-        guestsOptions[1].disabled = true;
-        guestsOptions[2].disabled = true;
-        guestsOptions[3].disabled = false;
-        guestsOptions[3].selected = true;
+function roomsChangeHandler(evt) {
+  switch (evt.target.value) {
+    case '1':
+      guestsOptions[0].disabled = true;
+      guestsOptions[1].disabled = true;
+      guestsOptions[2].disabled = false;
+      guestsOptions[3].disabled = true;
+      guestsOptions[2].selected = true;
+      break;
+    case '2':
+      guestsOptions[0].disabled = true;
+      guestsOptions[1].disabled = false;
+      guestsOptions[2].disabled = false;
+      guestsOptions[3].disabled = true;
+      if (guestsOptions[0].selected === true) {
+        guestsOptions[1].selected = true;
+      } else if (guestsOptions[3].selected === true) {
+        guestsOptions[1].selected = true;
       }
-    }
-  });
+      break;
+    case '3':
+      guestsOptions[0].disabled = false;
+      guestsOptions[1].disabled = false;
+      guestsOptions[2].disabled = false;
+      guestsOptions[3].disabled = true;
+      if (guestsOptions[3].selected === true) {
+        guestsOptions[0].selected = true;
+      }
+      break;
+    case '100':
+      guestsOptions[0].disabled = true;
+      guestsOptions[1].disabled = true;
+      guestsOptions[2].disabled = true;
+      guestsOptions[3].disabled = false;
+      guestsOptions[3].selected = true;
+      break;
+  }
 }
 
 roomSelect.addEventListener('change', roomsChangeHandler, false);
