@@ -3,8 +3,40 @@
 (function () {
   var URL = 'https://js.dump.academy/keksobooking';
 
-  function save(data, onLoad) {
+  function request(onLoad, onError) {
     var xhr = new XMLHttpRequest();
+    var httpErrors = {
+      400: 'Неверный запрос.',
+      401: 'Требуется авторизация.',
+      404: 'Данные не найдены.',
+      418: 'I\'m a teapot.',
+      500: 'Ошибка сервера.'
+    };
+
+    xhr.responseType = 'json';
+
+    xhr.addEventListener('load', function () {
+      if (xhr.status === 200) {
+        onLoad(xhr.response);
+      } else {
+        onError(httpErrors[xhr.status]);
+      }
+    });
+
+    xhr.addEventListener('error', function () {
+      onError('Произошла ошибка соединения.');
+    });
+    xhr.addEventListener('timeout', function () {
+      onError('Превышено время ожидания ответа. Проверьте интеренет соединение.');
+    });
+
+    xhr.timeout = 10000;
+
+    return xhr;
+  }
+
+  function save(data, onLoad, onError) {
+    var xhr = request(onLoad, onError);
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
@@ -16,24 +48,8 @@
   }
 
   function load(onLoad, onError) {
-    var xhr = new XMLHttpRequest();
+    var xhr = request(onLoad, onError);
     xhr.responseType = 'json';
-
-    xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
-        onLoad(xhr.response);
-      } else {
-        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
-      }
-    });
-    xhr.addEventListener('error', function () {
-      onError('Произошла ошибка соединения');
-    });
-    xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
-    });
-
-    xhr.timeout = 10000;
 
     xhr.open('GET', URL + '/data');
     xhr.send();

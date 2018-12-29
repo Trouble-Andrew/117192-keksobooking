@@ -49,7 +49,7 @@
 
   function resetForm() {
     advertiseTitle.value = formDefault.title;
-    // advertiseAddress.value = '603' + ', ' + '462';
+    advertiseAddress.value = '603' + ', ' + '462';
     appartmentPrice.value = formDefault.price;
     appartmentTypeSelect.value = formDefault.type;
     guestsSelect.value = formDefault.guestsSelect;
