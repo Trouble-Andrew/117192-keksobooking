@@ -16,7 +16,6 @@
   var guestsSelect = form.querySelector('#capacity');
   var guestsOptions = guestsSelect.querySelectorAll('option');
   var roomSelect = form.querySelector('#room_number');
-  var roomsOptions = roomSelect.querySelectorAll('option');
 
   var wiFiFeature = form.querySelector('#feature-wifi');
   var dishFeature = form.querySelector('#feature-dishwasher');
@@ -29,8 +28,6 @@
   var timeOutSelect = form.querySelector('#timeout');
 
   var description = form.querySelector('#description');
-
-  var resetButton = form.querySelector('.ad-form__reser');
 
   var formDefault = {
     title: advertiseTitle.value,
@@ -52,24 +49,22 @@
 
   function resetForm() {
     advertiseTitle.value = formDefault.title;
-    advertiseAddress.value = formDefault.address;
+    // advertiseAddress.value = '603' + ', ' + '462';
     appartmentPrice.value = formDefault.price;
     appartmentTypeSelect.value = formDefault.type;
-
     guestsSelect.value = formDefault.guestsSelect;
     roomSelect.value = formDefault.roomSelect;
-
     wiFiFeature.value = formDefault.wiFi;
     dishFeature.value = formDefault.dish;
     parkingFeature.value = formDefault.parking;
     washerFeature.value = formDefault.washer;
     elevatorFeature.value = formDefault.elevator;
-
-    description.value = formDefault. description;
+    description.value = formDefault.description;
   }
 
   function resetClickHandler() {
     resetForm();
+    window.pinSlider.pinPosition();
   }
 
   function apartmentChangeHandler(evt) {
@@ -157,12 +152,9 @@
   timeInSelect.addEventListener('change', timeChangeHandler, false);
   timeOutSelect.addEventListener('change', timeChangeHandler, false);
 
-  // reserButton.addEventListener('click', resetClickHandler);
-
   window.form = {
     formDefault: formDefault,
     reset: resetForm,
-    resetHandler: resetClickHandler,
-    resetButton: resetButton
+    resetHandler: resetClickHandler
   };
 })();

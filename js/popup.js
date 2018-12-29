@@ -41,7 +41,9 @@
     document.addEventListener('keydown', window.util.isEscEvent(evt, close(element)));
   }
 
+
   function close(element) {
+    document.removeEventListener('keydown', window.util.isEscEvent);
     element.remove();
   }
 

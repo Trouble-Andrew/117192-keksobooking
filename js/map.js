@@ -4,11 +4,8 @@
   var PIN_MAIN = document.querySelector('.map__pin--main');
   var map = document.querySelector('.map');
   var mapPins = document.querySelector('.map__pins');
-  // var ads = window.data.generateAds();
+  var resetButton = document.querySelector('.ad-form__reset');
   var fragment = document.createDocumentFragment();
-
-  // console.log(ads);
-  // console.log(window.load.data);
 
   var adForm = document.querySelector('.ad-form');
   var fieldsetAdForm = adForm.querySelectorAll('fieldset');
@@ -22,7 +19,6 @@
   toggleFieldsetDisabled(fieldsetAdForm, true);
 
   function activateMap() {
-    console.log(window.load.data);
     window.load.data.forEach(function (ad) {
       if (ad.offer) {
         fragment.appendChild(window.pin.render(ad));
@@ -39,7 +35,7 @@
     });
 
     PIN_MAIN.removeEventListener('mouseup', activateMouseUpHandler);
-    window.form.resetButton.addEventListener('click', window.form.resetClickHandler);
+    resetButton.addEventListener('click', window.form.resetClickHandler);
   }
 
   function activateMouseUpHandler() {

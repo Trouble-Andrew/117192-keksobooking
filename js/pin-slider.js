@@ -19,6 +19,12 @@
     return pinMainPosition;
   }
 
+  function defaultPinPosition() {
+    addressInput.value = '603' + ', ' + '462';
+    PIN_MAIN.style.left = '570px';
+    PIN_MAIN.style.top = '375px';
+  }
+
   PIN_MAIN.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
@@ -67,4 +73,9 @@
     document.addEventListener('mousemove', mouseMoveHandler);
     document.addEventListener('mouseup', mouseUpHandler);
   });
+
+  window.pinSlider = {
+    pinPosition: defaultPinPosition,
+    pin: 10
+  };
 })();
