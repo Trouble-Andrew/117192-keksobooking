@@ -19,7 +19,6 @@
   toggleFieldsetDisabled(fieldsetAdForm, true);
 
   function activateMap() {
-    window.pinSlider.pinPosition();
     window.load.data.forEach(function (ad) {
       if (ad.offer) {
         fragment.appendChild(window.pin.render(ad));

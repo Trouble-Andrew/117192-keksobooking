@@ -31,21 +31,17 @@
 
   var formDefault = {
     title: advertiseTitle.value,
-    address: advertiseAddress.value,
+    address: '603' + ', ' + '462',
     type: appartmentTypeSelect.value,
     price: appartmentPrice.value,
     timein: timeInSelect.value,
     timeout: timeOutSelect.value,
     rooms: roomSelect.value,
     guests: guestsSelect.value,
-    wiFi: wiFiFeature.value,
-    dish: dishFeature.value,
-    parking: parkingFeature.value,
-    washer: washerFeature.value,
-    elevator: elevatorFeature.value,
-    conditioner: conditionerFeature.value,
     description: description.value
   };
+
+  advertiseAddress.value = '603' + ', ' + '462';
 
   function resetForm() {
     advertiseTitle.value = formDefault.title;
@@ -54,11 +50,12 @@
     appartmentTypeSelect.value = formDefault.type;
     guestsSelect.value = formDefault.guestsSelect;
     roomSelect.value = formDefault.roomSelect;
-    wiFiFeature.value = formDefault.wiFi;
-    dishFeature.value = formDefault.dish;
-    parkingFeature.value = formDefault.parking;
-    washerFeature.value = formDefault.washer;
-    elevatorFeature.value = formDefault.elevator;
+    wiFiFeature.checked = false;
+    dishFeature.checked = false;
+    parkingFeature.checked = false;
+    washerFeature.checked = false;
+    elevatorFeature.checked = false;
+    conditionerFeature.checked = false;
     description.value = formDefault.description;
   }
 
