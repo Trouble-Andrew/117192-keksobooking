@@ -19,6 +19,7 @@
   toggleFieldsetDisabled(fieldsetAdForm, true);
 
   function activateMap() {
+    window.pinSlider.pinPosition();
     window.load.data.forEach(function (ad) {
       if (ad.offer) {
         fragment.appendChild(window.pin.render(ad));
@@ -35,7 +36,7 @@
     });
 
     PIN_MAIN.removeEventListener('mouseup', activateMouseUpHandler);
-    resetButton.addEventListener('click', window.form.resetClickHandler);
+    resetButton.addEventListener('click', window.form.resetHandler);
   }
 
   function activateMouseUpHandler() {

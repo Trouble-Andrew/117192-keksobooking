@@ -16,28 +16,40 @@
     window.backend.save(new FormData(form), successSendMessage, errorSendMessage);
   });
 
+  function closeSuccessMessage() {
+    document.removeEventListener('keydown', messageSuccessClickHandler);
+    var successMessage = document.querySelector('.success');
+    successMessage.remove();
+  }
+  function closeErrorMessage() {
+    document.removeEventListener('keydown', messageSuccessClickHandler);
+    var errorMessage = document.querySelector('.error');
+    errorMessage.remove();
+  }
+
+  function messageSuccessClickHandler(evt) {
+    window.util.isEscEvent(evt, closeSuccessMessage);
+  }
+
+  function messageErrorClickHandler(evt) {
+    window.util.isEscEvent(evt, closeErrorMessage);
+  }
+
   function successSendMessage() {
     window.form.reset();
+    window.pinSlider.pinPosition();
     form.appendChild(successSendMessageTemplate);
     var successPopup = document.querySelector('.success');
-    form.appendChild(successSendMessageTemplate);
-    document.addEventListener('keydown', function (evt) {
-      window.popup.close(evt, successPopup);
-    });
-    successPopup.addEventListener('click', function () {
-      successPopup.remove();
-    });
+    successPopup.addEventListener('click', closeSuccessMessage);
+    document.addEventListener('keydown', messageSuccessClickHandler);
   }
+
   function errorSendMessage() {
     form.appendChild(errorSendMessageTemplate);
     var errorPopup = document.querySelector('.error');
     form.appendChild(errorSendMessageTemplate);
-    document.addEventListener('keydown', function (evt) {
-      window.popup.close(evt, errorPopup);
-    });
-    errorPopup.addEventListener('click', function () {
-      errorPopup.remove();
-    });
+    errorPopup.addEventListener('click', closeErrorMessage);
+    document.addEventListener('keydown', messageErrorClickHandler);
   }
 
   var dataArray = [];

@@ -43,7 +43,7 @@
 
 
   function close(element) {
-    document.removeEventListener('keydown', window.util.isEscEvent);
+    // document.removeEventListener('keydown', window.util.isEscEvent);
     element.remove();
   }
 
