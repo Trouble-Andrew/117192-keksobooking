@@ -36,7 +36,7 @@
   }
 
   function successSendMessage() {
-    window.form.reset();
+    form.reset();
     window.pinSlider.pinPosition();
     form.appendChild(successSendMessageTemplate);
     var successPopup = document.querySelector('.success');

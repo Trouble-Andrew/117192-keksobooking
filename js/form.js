@@ -8,7 +8,6 @@
 
   var form = document.querySelector('.ad-form');
 
-  var advertiseTitle = form.querySelector('#title');
   var advertiseAddress = form.querySelector('#address');
   var appartmentPrice = form.querySelector('#price');
   var appartmentTypeSelect = form.querySelector('#type');
@@ -17,50 +16,12 @@
   var guestsOptions = guestsSelect.querySelectorAll('option');
   var roomSelect = form.querySelector('#room_number');
 
-  var wiFiFeature = form.querySelector('#feature-wifi');
-  var dishFeature = form.querySelector('#feature-dishwasher');
-  var parkingFeature = form.querySelector('#feature-parking');
-  var washerFeature = form.querySelector('#feature-washer');
-  var elevatorFeature = form.querySelector('#feature-elevator');
-  var conditionerFeature = form.querySelector('#feature-conditioner');
-
   var timeInSelect = form.querySelector('#timein');
   var timeOutSelect = form.querySelector('#timeout');
 
-  var description = form.querySelector('#description');
-
-  var formDefault = {
-    title: advertiseTitle.value,
-    address: '603' + ', ' + '462',
-    type: appartmentTypeSelect.value,
-    price: appartmentPrice.value,
-    timein: timeInSelect.value,
-    timeout: timeOutSelect.value,
-    rooms: roomSelect.value,
-    guests: guestsSelect.value,
-    description: description.value
-  };
-
   advertiseAddress.value = '603' + ', ' + '462';
 
-  function resetForm() {
-    advertiseTitle.value = formDefault.title;
-    advertiseAddress.value = '603' + ', ' + '462';
-    appartmentPrice.value = formDefault.price;
-    appartmentTypeSelect.value = formDefault.type;
-    guestsSelect.value = formDefault.guestsSelect;
-    roomSelect.value = formDefault.roomSelect;
-    wiFiFeature.checked = false;
-    dishFeature.checked = false;
-    parkingFeature.checked = false;
-    washerFeature.checked = false;
-    elevatorFeature.checked = false;
-    conditionerFeature.checked = false;
-    description.value = formDefault.description;
-  }
-
   function resetClickHandler() {
-    resetForm();
     window.pinSlider.pinPosition();
   }
 
@@ -150,8 +111,6 @@
   timeOutSelect.addEventListener('change', timeChangeHandler, false);
 
   window.form = {
-    formDefault: formDefault,
-    reset: resetForm,
     resetHandler: resetClickHandler
   };
 })();
