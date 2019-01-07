@@ -8,7 +8,6 @@
 
   var form = document.querySelector('.ad-form');
 
-  var advertiseAddress = form.querySelector('#address');
   var appartmentPrice = form.querySelector('#price');
   var appartmentTypeSelect = form.querySelector('#type');
 
@@ -19,8 +18,6 @@
   var timeInSelect = form.querySelector('#timein');
   var timeOutSelect = form.querySelector('#timeout');
 
-  advertiseAddress.value = '603' + ', ' + '462';
-
   function resetClickHandler() {
     window.pinSlider.pinPosition();
   }
@@ -29,33 +26,28 @@
     switch (evt.target.value) {
       case 'bungalo':
         appartmentPrice.minlength = BUNGALO_MIN_PRICE;
+        appartmentPrice.min = BUNGALO_MIN_PRICE;
         appartmentPrice.placeholder = BUNGALO_MIN_PRICE;
         break;
       case 'flat':
         appartmentPrice.minlength = FLAT_MIN_PRICE;
+        appartmentPrice.min = FLAT_MIN_PRICE;
         appartmentPrice.placeholder = FLAT_MIN_PRICE;
         break;
       case 'house':
         appartmentPrice.minlength = HOUSE_MIN_PRICE;
+        appartmentPrice.min = HOUSE_MIN_PRICE;
         appartmentPrice.placeholder = HOUSE_MIN_PRICE;
         break;
       case 'palace':
         appartmentPrice.minlength = PALACE_MIN_PRICE;
+        appartmentPrice.min = PALACE_MIN_PRICE;
         appartmentPrice.placeholder = PALACE_MIN_PRICE;
         break;
     }
   }
 
   appartmentTypeSelect.addEventListener('change', apartmentChangeHandler, false);
-
-  function startGuests() {
-    guestsOptions[0].disabled = true;
-    guestsOptions[1].disabled = true;
-    guestsOptions[2].disabled = false;
-    guestsOptions[3].disabled = true;
-  }
-
-  startGuests();
 
   function roomsChangeHandler(evt) {
     switch (evt.target.value) {

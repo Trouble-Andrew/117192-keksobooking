@@ -2,6 +2,7 @@
 
 (function () {
   var URL = 'https://js.dump.academy/keksobooking';
+  var TIMEOUT = 10000;
 
   function request(onLoad, onError) {
     var xhr = new XMLHttpRequest();
@@ -30,7 +31,7 @@
       onError('Превышено время ожидания ответа. Проверьте интеренет соединение.');
     });
 
-    xhr.timeout = 10000;
+    xhr.timeout = TIMEOUT;
 
     return xhr;
   }

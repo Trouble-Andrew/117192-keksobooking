@@ -22,7 +22,7 @@
     successMessage.remove();
   }
   function closeErrorMessage() {
-    document.removeEventListener('keydown', messageSuccessClickHandler);
+    document.removeEventListener('keydown', messageErrorClickHandler);
     var errorMessage = document.querySelector('.error');
     errorMessage.remove();
   }
@@ -55,9 +55,7 @@
   var dataArray = [];
 
   function successHandler(ads) {
-    ads.forEach(function (ad) {
-      dataArray.push(ad);
-    });
+    dataArray = ads.slice();
     return dataArray;
   }
 
@@ -76,6 +74,8 @@
   window.backend.load(successHandler, errorHandler);
 
   window.load = {
-    data: dataArray
+    getData: function () {
+      return dataArray;
+    }
   };
 })();
