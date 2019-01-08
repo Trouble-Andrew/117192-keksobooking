@@ -39,10 +39,23 @@
     resetButton.addEventListener('click', window.form.resetHandler);
   }
 
+  function deactivationMap() {
+    map.classList.add('map--faded');
+    adForm.classList.add('ad-form--disabled');
+    var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    pins.forEach(function (pin) {
+      pin.remove();
+    });
+    PIN_MAIN.addEventListener('mouseup', activateMouseUpHandler);
+  }
+
   function activateMouseUpHandler() {
     activateMap();
   }
 
   PIN_MAIN.addEventListener('mouseup', activateMouseUpHandler);
 
+  window.map = {
+    deactivation: deactivationMap
+  };
 })();

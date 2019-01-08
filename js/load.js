@@ -38,6 +38,7 @@
   function successSendMessage() {
     form.reset();
     window.pinSlider.pinPosition();
+    window.map.deactivation();
     form.appendChild(successSendMessageTemplate);
     var successPopup = document.querySelector('.success');
     successPopup.addEventListener('click', closeSuccessMessage);
@@ -59,7 +60,7 @@
     return dataArray;
   }
 
-  var errorHandler = function (errorMessage) {
+  function errorHandler(errorMessage) {
     var node = document.createElement('div');
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: #ff5635; color: #ffffff;';
     node.style.position = 'absolute';
@@ -69,7 +70,7 @@
 
     node.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', node);
-  };
+  }
 
   window.backend.load(successHandler, errorHandler);
 
