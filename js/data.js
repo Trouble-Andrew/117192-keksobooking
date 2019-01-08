@@ -12,14 +12,14 @@
   var mapPins = document.querySelector('.map__pins');
   var mapPinsSize = mapPins.offsetWidth;
 
-  var authorData = {
+  var AuthorData = {
     'author': {
       'avatar': 'img/avatars/user0' + '.png'
     },
     'userAvatarNum': [1, 2, 3, 4, 5, 6, 7, 8]
   };
 
-  var offerData = {
+  var OfferData = {
     'offer': {
       'title': ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'],
       'address': '' + window.util.getRandom(1, ADDRESS_RANDOM) + ',' + ' ' + window.util.getRandom(1, ADDRESS_RANDOM),
@@ -40,20 +40,20 @@
     advertise.author = {};
     advertise.offer = {};
     advertise.location = {};
-    advertise.author.avatar = 'img/avatars/user0' + authorData.userAvatarNum[i] + '.png';
+    advertise.author.avatar = 'img/avatars/user0' + AuthorData.userAvatarNum[i] + '.png';
     advertise.location.x = window.util.getRandom(0, mapPinsSize);
     advertise.location.y = window.util.getRandom(POSITION_Y1_RANDOM, POSITION_Y2_RANDOM);
-    advertise.offer.title = offerData.offer.title[i];
+    advertise.offer.title = OfferData.offer.title[i];
     advertise.offer.address = advertise.location.x + ', ' + advertise.location.y;
     advertise.offer.price = window.util.getRandom(MIN_PRICE_RANDOM, MAX_PRICE_RANDOM);
-    advertise.offer.type = offerData.offer.type[window.util.getRandom(0, offerData.offer.type.length)];
+    advertise.offer.type = OfferData.offer.type[window.util.getRandom(0, OfferData.offer.type.length)];
     advertise.offer.rooms = window.util.getRandom(1, ROOMS_RANDOM);
     advertise.offer.guests = window.util.getRandom(1, ROOMS_RANDOM * 2);
-    advertise.offer.checkin = offerData.offer.checkin[window.util.getRandom(0, offerData.offer.checkin.length)];
-    advertise.offer.checkout = offerData.offer.checkout[window.util.getRandom(0, offerData.offer.checkout.length)];
-    advertise.offer.features = offerData.offer.features;
+    advertise.offer.checkin = OfferData.offer.checkin[window.util.getRandom(0, OfferData.offer.checkin.length)];
+    advertise.offer.checkout = OfferData.offer.checkout[window.util.getRandom(0, OfferData.offer.checkout.length)];
+    advertise.offer.features = OfferData.offer.features;
     advertise.offer.description = ' ';
-    advertise.offer.photos = offerData.offer.photos;
+    advertise.offer.photos = OfferData.offer.photos;
 
     return advertise;
   }

@@ -6,7 +6,7 @@
 
   function request(onLoad, onError) {
     var xhr = new XMLHttpRequest();
-    var httpErrors = {
+    var HttpErrors = {
       400: 'Неверный запрос.',
       401: 'Требуется авторизация.',
       404: 'Данные не найдены.',
@@ -20,7 +20,7 @@
       if (xhr.status === 200) {
         onLoad(xhr.response);
       } else {
-        onError(httpErrors[xhr.status]);
+        onError(HttpErrors[xhr.status]);
       }
     });
 
