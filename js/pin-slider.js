@@ -5,7 +5,7 @@
   var PIN_MAIN_END_HEIGHT = window.getComputedStyle(document.querySelector('.map__pin--main'), ':after').getPropertyValue('height');
   var PIN_MAIN_WIDTH = PIN_MAIN.offsetWidth;
   var PIN_MAIN_HEIGHT = PIN_MAIN.offsetHeight;
-  var DEFAULT_PIN_LOCATION = '603' + ', ' + '462';
+  var DEFAULT_PIN_LOCATION = '603, 462';
   var MAP_Y_MIN = 130;
   var MAP_Y_MAX = 630;
   var PADDING = 30;

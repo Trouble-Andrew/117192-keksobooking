@@ -20,20 +20,17 @@
   toggleFieldsetDisabled(fieldsetAdForm, true);
 
   function activateMap() {
-    for (var i = 0; i < OFFERS_QUANTITY; i++) {
-      if (window.load.getData()[i].offer) {
-        fragment.appendChild(window.pin.render(window.load.getData()[i]));
-      }
-    }
+    var ads = window.load.getData().slice(0, OFFERS_QUANTITY);
     map.classList.remove('map--faded');
     toggleFieldsetDisabled(fieldsetAdForm, false);
-    mapPins.appendChild(fragment);
     adForm.classList.remove('ad-form--disabled');
-    var pins = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
 
-    pins.forEach(function (pinEach, index) {
-      window.popup.open(pinEach, window.load.getData()[index]);
-    });
+    for (var i = 0; i < ads.length; i++) {
+      var pin = window.pin.render(ads[i]);
+      fragment.appendChild(pin);
+      window.popup.open(pin, ads[i]);
+    }
+    mapPins.appendChild(fragment);
 
     PIN_MAIN.removeEventListener('mouseup', activateMouseUpHandler);
     resetButton.addEventListener('click', window.form.resetHandler);
