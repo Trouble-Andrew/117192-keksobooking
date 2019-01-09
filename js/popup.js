@@ -32,9 +32,9 @@
     document.removeEventListener('keydown', popupEscHandler);
   }
 
-  var removeClickHandler = function () {
+  function removeClickHandler() {
     removeCard();
-  };
+  }
 
   window.popup = {
     open: pinPopupOpen

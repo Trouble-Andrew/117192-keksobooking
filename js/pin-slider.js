@@ -5,6 +5,7 @@
   var PIN_MAIN_END_HEIGHT = window.getComputedStyle(document.querySelector('.map__pin--main'), ':after').getPropertyValue('height');
   var PIN_MAIN_WIDTH = PIN_MAIN.offsetWidth;
   var PIN_MAIN_HEIGHT = PIN_MAIN.offsetHeight;
+  var DEFAULT_PIN_LOCATION = '603, 462';
   var MAP_Y_MIN = 130;
   var MAP_Y_MAX = 630;
   var PADDING = 30;
@@ -17,6 +18,12 @@
     pinMainPosition.top = parseInt(PIN_MAIN.style.top, 10) + PIN_MAIN_HEIGHT + parseInt(PIN_MAIN_END_HEIGHT, 10);
     addressInput.value = pinMainPosition.left + ', ' + pinMainPosition.top;
     return pinMainPosition;
+  }
+
+  function defaultPinPosition() {
+    addressInput.value = DEFAULT_PIN_LOCATION;
+    PIN_MAIN.style.left = '570px';
+    PIN_MAIN.style.top = '375px';
   }
 
   PIN_MAIN.addEventListener('mousedown', function (evt) {
@@ -67,4 +74,8 @@
     document.addEventListener('mousemove', mouseMoveHandler);
     document.addEventListener('mouseup', mouseUpHandler);
   });
+
+  window.pinSlider = {
+    pinPosition: defaultPinPosition
+  };
 })();
