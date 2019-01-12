@@ -5,9 +5,9 @@
   var filteredOffers;
   var FILTERED_OFFERS_LENGTH = 5;
 
-  var trimOffers = function (offers) {
+  function trimOffers(offers) {
     return offers.slice(0, FILTERED_OFFERS_LENGTH);
-  };
+  }
 
   var PIN_MAIN = document.querySelector('.map__pin--main');
   var OFFERS_QUANTITY = 5;

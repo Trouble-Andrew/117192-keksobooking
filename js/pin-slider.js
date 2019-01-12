@@ -34,7 +34,7 @@
       y: evt.clientY
     };
 
-    var mouseMoveHandler = function (moveEvt) {
+    function mouseMoveHandler(moveEvt) {
       moveEvt.preventDefault();
 
       var shift = {
@@ -61,15 +61,15 @@
       }
 
       calculatePinPosition();
-    };
+    }
 
-    var mouseUpHandler = function (upEvt) {
+    function mouseUpHandler(upEvt) {
       upEvt.preventDefault();
 
       document.removeEventListener('mousemove', mouseMoveHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
 
-    };
+    }
 
     document.addEventListener('mousemove', mouseMoveHandler);
     document.addEventListener('mouseup', mouseUpHandler);
