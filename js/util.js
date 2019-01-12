@@ -42,7 +42,7 @@
 
   function deleteElements(selector) {
     var elements = document.querySelectorAll(selector);
-    if (elements !== null || elements) {
+    if (elements !== null || elements !== undefined) {
       elements.forEach(function (element) {
         element.remove();
       });
