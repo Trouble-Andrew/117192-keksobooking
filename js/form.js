@@ -20,6 +20,7 @@
 
   function resetClickHandler() {
     window.pinSlider.pinPosition();
+    window.map.deactivation();
   }
 
   function apartmentChangeHandler(evt) {
