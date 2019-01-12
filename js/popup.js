@@ -6,9 +6,9 @@
   function pinPopupOpen(pinOnMap, advertise) {
     pinOnMap.addEventListener('click', function pinClickHandler() {
       var advertiseAll = document.querySelectorAll('.map__card');
-
       advertiseAll.forEach(function (ad) {
         ad.remove();
+        activePinRemover();
       });
 
       var advertiseOne = map.appendChild(window.card.card(advertise));
@@ -30,14 +30,21 @@
   function removeCard() {
     var card = document.querySelector('.map__card');
     card.remove();
-    var pin = document.querySelector('.map__pin--active');
-    pin.classList.remove('map__pin--active');
+    activePinRemover();
     document.removeEventListener('keydown', popupEscHandler);
   }
 
   function removeClickHandler() {
     removeCard();
   }
+
+  function activePinRemover() {
+    var activePin = document.querySelectorAll('.map__pin--active');
+    activePin.forEach(function (pin) {
+      pin.classList.remove('map__pin--active');
+    });
+  }
+
 
   window.popup = {
     open: pinPopupOpen
