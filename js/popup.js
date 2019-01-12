@@ -12,6 +12,7 @@
       });
 
       var advertiseOne = map.appendChild(window.card.card(advertise));
+      pinOnMap.classList.add('map__pin--active');
       adCloseClickHandler(advertiseOne);
     });
   }
@@ -29,6 +30,8 @@
   function removeCard() {
     var card = document.querySelector('.map__card');
     card.remove();
+    var pin = document.querySelector('.map__pin--active');
+    pin.classList.remove('map__pin--active');
     document.removeEventListener('keydown', popupEscHandler);
   }
 
