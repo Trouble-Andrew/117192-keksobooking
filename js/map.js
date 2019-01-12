@@ -4,20 +4,18 @@
   var originalOffers;
   var filteredOffers;
   var FILTERED_OFFERS_LENGTH = 5;
-
-  function trimOffers(offers) {
-    return offers.slice(0, FILTERED_OFFERS_LENGTH);
-  }
-
   var PIN_MAIN = document.querySelector('.map__pin--main');
   var OFFERS_QUANTITY = 5;
   var map = document.querySelector('.map');
   var mapPins = document.querySelector('.map__pins');
   var resetButton = document.querySelector('.ad-form__reset');
   var fragment = document.createDocumentFragment();
-
   var adForm = document.querySelector('.ad-form');
   var fieldsetAdForm = adForm.querySelectorAll('fieldset');
+
+  function trimOffers(offers) {
+    return offers.slice(0, FILTERED_OFFERS_LENGTH);
+  }
 
   function toggleFieldsetDisabled(fieldset, disabled) {
     fieldsetAdForm.forEach(function (field) {
