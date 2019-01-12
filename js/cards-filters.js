@@ -14,11 +14,11 @@
     high: 50000
   };
 
-  var checkType = function (offerType, filtersType) {
+  function checkType(offerType, filtersType) {
     return filtersType === 'any' || filtersType === offerType.toString();
-  };
+  }
 
-  var getRentCostRange = function (offerRentCost) {
+  function getRentCostRange(offerRentCost) {
     if (offerRentCost < PRICE_RANGES.low) {
       return 'low';
     } else if (offerRentCost >= PRICE_RANGES.high) {
@@ -26,19 +26,19 @@
     } else {
       return 'middle';
     }
-  };
+  }
 
-  var checkRentCost = function (offerRentCost, filtersCost) {
+  function checkRentCost(offerRentCost, filtersCost) {
     return filtersCost === 'any' || filtersCost === getRentCostRange(offerRentCost);
-  };
+  }
 
-  var checkFeatures = function (offerFeatures, neededFeatures) {
+  function checkFeatures(offerFeatures, neededFeatures) {
     return neededFeatures.every(function (feature) {
       return offerFeatures.indexOf(feature) > -1;
     });
-  };
+  }
 
-  var handleFiltering = function (filteredRents) {
+  function handleFiltering(filteredRents) {
     window.util.delete('.map__pin:not(.map__pin--main)');
     window.util.delete('.map__card');
     for (var i = 0; i < filteredRents.length; i++) {
@@ -47,9 +47,9 @@
       window.popup.open(pin, filteredRents[i]);
     }
     window.map.mapPins.appendChild(fragment);
-  };
+  }
 
-  var filtersFormChangeHandler = function () {
+  function filtersFormChangeHandler() {
     selectElems.forEach(function (selectElem) {
       selectElem.dataset.feature = selectElem.id.replace(/housing-/i, '');
     });
@@ -80,7 +80,7 @@
 
     window.map.filteredOffers = window.map.trimOffers(allFilteredOffers);
     handleFiltering(window.map.filteredOffers);
-  };
+  }
 
 
   filtersForm.addEventListener('change', function () {
