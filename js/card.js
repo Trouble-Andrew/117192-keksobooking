@@ -57,7 +57,7 @@
 
     var cardFeatures = cardElement.querySelector('.popup__features');
 
-    window.util.removeChildren(cardFeatures);
+    window.util.remove(cardFeatures);
 
     card.offer.features.forEach(function (feature) {
       var newCardFeature = document.createElement('li');
@@ -70,7 +70,7 @@
     cardElement.querySelector('.popup__description').textContent = card.offer.description;
     var cardPhotos = cardElement.querySelector('.popup__photos');
 
-    window.util.removeChildren(cardPhotos);
+    window.util.remove(cardPhotos);
 
     card.offer.photos.forEach(function (photo) {
       var newPhoto = document.createElement('img');

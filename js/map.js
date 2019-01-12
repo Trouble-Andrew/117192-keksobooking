@@ -1,6 +1,14 @@
 'use strict';
 
 (function () {
+  var originalOffers;
+  var filteredOffers;
+  var FILTERED_OFFERS_LENGTH = 5;
+
+  var trimOffers = function (offers) {
+    return offers.slice(0, FILTERED_OFFERS_LENGTH);
+  };
+
   var PIN_MAIN = document.querySelector('.map__pin--main');
   var OFFERS_QUANTITY = 5;
   var map = document.querySelector('.map');
@@ -20,6 +28,8 @@
   toggleFieldsetDisabled(fieldsetAdForm, true);
 
   function activateMap() {
+    originalOffers = window.load.getData();
+    filteredOffers = trimOffers(window.load.getData());
     var ads = window.load.getData().slice(0, OFFERS_QUANTITY);
     map.classList.remove('map--faded');
     toggleFieldsetDisabled(fieldsetAdForm, false);
@@ -37,12 +47,11 @@
   }
 
   function deactivationMap() {
+    toggleFieldsetDisabled(fieldsetAdForm, true);
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
-    var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-    pins.forEach(function (pin) {
-      pin.remove();
-    });
+    window.util.delete('.map__pin:not(.map__pin--main)');
+    window.util.delete('.map__card');
     PIN_MAIN.addEventListener('mouseup', activateMouseUpHandler);
   }
 
@@ -53,6 +62,14 @@
   PIN_MAIN.addEventListener('mouseup', activateMouseUpHandler);
 
   window.map = {
-    deactivation: deactivationMap
+    deactivation: deactivationMap,
+    originalOffers: function () {
+      return originalOffers;
+    },
+    filteredOffers: function () {
+      return filteredOffers;
+    },
+    trimOffers: trimOffers,
+    mapPins: mapPins
   };
 })();

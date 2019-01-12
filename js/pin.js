@@ -18,8 +18,16 @@
     return pinElement;
   }
 
+  function deletePins() {
+    var allPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    allPins.forEach(function (pins) {
+      pins.remove();
+    });
+  }
+
   window.pin = {
-    render: renderPin
+    render: renderPin,
+    delete: deletePins
   };
 
 })();

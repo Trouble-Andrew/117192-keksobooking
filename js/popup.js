@@ -23,7 +23,7 @@
   }
 
   function popupEscHandler(evt) {
-    window.util.isEscEvent(evt, removeCard);
+    window.util.pressEsc(evt, removeCard);
   }
 
   function removeCard() {

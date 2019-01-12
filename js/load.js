@@ -28,11 +28,11 @@
   }
 
   function messageSuccessClickHandler(evt) {
-    window.util.isEscEvent(evt, closeSuccessMessage);
+    window.util.pressEsc(evt, closeSuccessMessage);
   }
 
   function messageErrorClickHandler(evt) {
-    window.util.isEscEvent(evt, closeErrorMessage);
+    window.util.pressEsc(evt, closeErrorMessage);
   }
 
   function successSendMessage() {
