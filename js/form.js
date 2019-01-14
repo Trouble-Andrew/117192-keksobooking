@@ -21,6 +21,7 @@
   function resetClickHandler() {
     window.pinSlider.pinPosition();
     window.map.deactivation();
+    window.filter.reset();
   }
 
   function apartmentChangeHandler(evt) {
@@ -47,8 +48,6 @@
         break;
     }
   }
-
-  appartmentTypeSelect.addEventListener('change', apartmentChangeHandler, false);
 
   function roomsChangeHandler(evt) {
     switch (evt.target.value) {
@@ -89,8 +88,6 @@
     }
   }
 
-  roomSelect.addEventListener('change', roomsChangeHandler, false);
-
   function changeTime(evt) {
     timeInSelect.value = evt.target.value;
     timeOutSelect.value = evt.target.value;
@@ -100,6 +97,8 @@
     changeTime(evt);
   }
 
+  appartmentTypeSelect.addEventListener('change', apartmentChangeHandler, false);
+  roomSelect.addEventListener('change', roomsChangeHandler, false);
   timeInSelect.addEventListener('change', timeChangeHandler, false);
   timeOutSelect.addEventListener('change', timeChangeHandler, false);
 

@@ -37,6 +37,7 @@
 
   function successSendMessage() {
     form.reset();
+    window.filter.reset();
     window.pinSlider.pinPosition();
     window.map.deactivation();
     form.appendChild(successSendMessageTemplate);

@@ -11,7 +11,7 @@
         activePinRemover();
       });
 
-      var advertiseOne = map.appendChild(window.card.card(advertise));
+      var advertiseOne = map.appendChild(window.card.create(advertise));
       pinOnMap.classList.add('map__pin--active');
       adCloseClickHandler(advertiseOne);
     });

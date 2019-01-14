@@ -21,11 +21,8 @@
   }
 
   function defineGuests(element) {
-    var guests = ' гостей';
-    if (element.offer.guests === 1) {
-      guests = ' гостя';
-    }
-    return guests;
+    var guestsTitle = element.offer.guests === 1 ? ' гостя' : ' гостей';
+    return guestsTitle;
   }
 
   function defineRooms(element) {
@@ -93,7 +90,7 @@
   }
 
   window.card = {
-    card: createCard
+    create: createCard
   };
 
 })();
