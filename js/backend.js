@@ -37,6 +37,11 @@
     return xhr;
   }
 
+  function addXhr(onLoad, onError) {
+    var xhr = request(onLoad, onError);
+    xhr.responseType = 'json';
+  }
+
   function save(data, onLoad, onError) {
     var xhr = request(onLoad, onError);
     xhr.responseType = 'json';

@@ -41,6 +41,7 @@
     window.filter.reset();
     window.pinSlider.pinPosition();
     window.map.deactivation();
+    window.uploadedPictures.reset();
     form.appendChild(successSendMessageTemplate);
     var successPopup = document.querySelector('.success');
     successPopup.addEventListener('click', closeSuccessMessage);

@@ -22,6 +22,7 @@
     window.pinSlider.pinPosition();
     window.map.deactivation();
     window.filter.reset();
+    window.uploadedPictures.reset();
   }
 
   function apartmentChangeHandler(evt) {
@@ -93,14 +94,18 @@
     timeOutSelect.value = evt.target.value;
   }
 
-  function timeChangeHandler(evt) {
+  function timeInChangeHandler(evt) {
+    changeTime(evt);
+  }
+
+  function timeOutChangeHandler(evt) {
     changeTime(evt);
   }
 
   appartmentTypeSelect.addEventListener('change', apartmentChangeHandler, false);
   roomSelect.addEventListener('change', roomsChangeHandler, false);
-  timeInSelect.addEventListener('change', timeChangeHandler, false);
-  timeOutSelect.addEventListener('change', timeChangeHandler, false);
+  timeInSelect.addEventListener('change', timeInChangeHandler, false);
+  timeOutSelect.addEventListener('change', timeOutChangeHandler, false);
 
   window.form = {
     resetHandler: resetClickHandler
