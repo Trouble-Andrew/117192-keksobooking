@@ -72,12 +72,22 @@
     filter.features.splice(filter.features.indexOf(value), 1);
   }
 
+  function toggleFiltersDisabled(toggle) {
+    var mapSelects = window.map.filterForm.querySelectorAll('.map__filter');
+    var mapFeature = window.map.filterForm.querySelector('.map__features');
+    mapFeature.disabled = toggle;
+    mapSelects.forEach(function (select) {
+      select.disabled = toggle;
+    });
+  }
+
   window.filter = {
     add: add,
     addFeature: addFeature,
     removeFeature: removeFeature,
     apply: apply,
     reset: reset,
-    filter: filter
+    toggle: toggleFiltersDisabled
+
   };
 })();

@@ -29,7 +29,9 @@
 
   function removeCard() {
     var card = document.querySelector('.map__card');
-    card.remove();
+    if (card) {
+      card.remove();
+    }
     activePinRemover();
     document.removeEventListener('keydown', popupEscHandler);
   }

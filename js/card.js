@@ -1,6 +1,10 @@
 'use strict';
 
 (function () {
+  var ONE_GUEST = 1;
+  var ONE_ROOM = 1;
+  var FIVE_ROOMS = 5;
+
   var cardTemplate = document.querySelector('#card')
     .content
     .querySelector('.map__card');
@@ -21,15 +25,15 @@
   }
 
   function defineGuests(element) {
-    var guestsTitle = element.offer.guests === 1 ? ' гостя' : ' гостей';
+    var guestsTitle = element.offer.guests === ONE_GUEST ? ' гостя' : ' гостей';
     return guestsTitle;
   }
 
   function defineRooms(element) {
     var rooms = ' комнаты для ';
-    if (element.offer.rooms === 1) {
+    if (element.offer.rooms === ONE_ROOM) {
       rooms = ' комната для ';
-    } else if (element.offer.rooms === 5) {
+    } else if (element.offer.rooms === FIVE_ROOMS) {
       rooms = ' комнат для ';
     }
     return rooms;

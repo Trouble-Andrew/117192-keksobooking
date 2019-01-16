@@ -1,5 +1,6 @@
 'use strict';
 
+
 (function () {
   var FILTERED_OFFERS_LENGTH = 5;
   var PIN_MAIN = document.querySelector('.map__pin--main');
@@ -12,6 +13,7 @@
   var adForm = document.querySelector('.ad-form');
   var fieldsetAdForm = adForm.querySelectorAll('fieldset');
   var filterForm = document.querySelector('.map__filters');
+  var dataArray = [];
 
   function trimOffers(offers) {
     return offers.slice(0, FILTERED_OFFERS_LENGTH);
@@ -34,10 +36,14 @@
     space.appendChild(fragment);
   }
 
-  function activateMap() {
-    originalOffers = window.load.getData();
-    filteredOffers = trimOffers(window.load.getData());
-    var ads = window.load.getData().slice(0, FILTERED_OFFERS_LENGTH);
+  function successHandler(ad) {
+    dataArray = ad.slice();
+
+    originalOffers = dataArray;
+    filteredOffers = trimOffers(dataArray);
+    var ads = dataArray.slice(0, FILTERED_OFFERS_LENGTH);
+
+    window.filter.toggle(false);
     map.classList.remove('map--faded');
     toggleFieldsetDisabled(fieldsetAdForm, false);
     adForm.classList.remove('ad-form--disabled');
@@ -46,7 +52,24 @@
 
     PIN_MAIN.removeEventListener('mouseup', activateMouseUpHandler);
     resetButton.addEventListener('click', window.form.resetHandler);
+
     bindFilters();
+  }
+
+  function errorHandler(errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: #ff5635; color: #ffffff;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  }
+
+  function activateMap() {
+    window.backend.load(successHandler, errorHandler);
   }
 
   function deactivationMap() {
@@ -57,6 +80,7 @@
     window.util.delete('.map__pin:not(.map__pin--main)');
     window.util.delete('.map__card');
     window.filter.reset();
+    window.filter.toggle(true);
     PIN_MAIN.addEventListener('mouseup', activateMouseUpHandler);
   }
 
@@ -87,9 +111,14 @@
       if (evt.target.checked === false) {
         window.filter.removeFeature(evt.target.value);
       }
-      window.util.delete('.map__pin:not(.map__pin--main)');
-      window.util.delete('.map__card');
-      addCardsToMap(window.map.mapPins, window.filter.apply(window.map.originalOffers()).slice(0, FILTERED_OFFERS_LENGTH));
+
+      function addFilteredAd() {
+        window.util.delete('.map__pin:not(.map__pin--main)');
+        window.util.delete('.map__card');
+        addCardsToMap(window.map.mapPins, window.filter.apply(window.map.originalOffers()).slice(0, FILTERED_OFFERS_LENGTH));
+      }
+
+      window.util.debounce(addFilteredAd);
     });
   }
 

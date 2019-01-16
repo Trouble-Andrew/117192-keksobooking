@@ -37,6 +37,7 @@
 
   function successSendMessage() {
     form.reset();
+    window.filter.toggle(true);
     window.filter.reset();
     window.pinSlider.pinPosition();
     window.map.deactivation();
@@ -54,30 +55,4 @@
     document.addEventListener('keydown', messageErrorClickHandler);
   }
 
-  var dataArray = [];
-
-  function successHandler(ads) {
-    dataArray = ads.slice();
-    return dataArray;
-  }
-
-  function errorHandler(errorMessage) {
-    var node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: #ff5635; color: #ffffff;';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '30px';
-
-    node.textContent = errorMessage;
-    document.body.insertAdjacentElement('afterbegin', node);
-  }
-
-  window.backend.load(successHandler, errorHandler);
-
-  window.load = {
-    getData: function () {
-      return dataArray;
-    }
-  };
 })();
